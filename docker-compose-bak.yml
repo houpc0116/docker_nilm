@@ -1,0 +1,57 @@
+version: '3.9'
+
+services:
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto
+    restart: always
+    working_dir: /sub
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+      - ./mosquitto/sub:/sub
+    ports:
+      - 1883:1883
+      - 8080:8080
+
+  db:
+    image: mysql/mysql-server:5.7
+    restart: always
+    environment:
+       MYSQL_USER: awin
+       MYSQL_PASSWORD: awin
+       MYSQL_ROOT_PASSWORD: awin
+       MYSQL_DATABASE: nilm
+       MYSQL_ROOT_HOST: '%'
+    volumes:
+       - ./sql:/var/lib/mysql
+    ports:
+       - 3306:3306
+  web-api-1:
+    restart: always
+    build:
+       context: ./web-api-1
+       dockerfile: Dockerfile
+    ports:
+       - 8088:5000
+  web-nginx:
+    restart: always
+    build:
+       context: ./web
+       dockerfile: Dockerfile
+    ports:
+       - 80:80
+  sub:
+    restart: always
+    build:
+       context: ./sub
+       dockerfile: Dockerfile
+    volumes:
+       - ./sub:/app
+    ports:
+       - 8800:6000
+volumes:
+  config:
+  data:
+  log:
