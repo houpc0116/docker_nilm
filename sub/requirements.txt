@@ -1,0 +1,6 @@
+paho-mqtt
+datetime
+mysql-connector
+mysql-connector-python
+websocket
+pymysql
