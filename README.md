@@ -10,9 +10,9 @@ persistence true
 persistence_location /mosquitto/data/
 log_dest file /mosquitto/log/mosquitto.log
 allow_anonymous false
-password_file /mosquitto/config/pwfile
+password_file /mosquitto/config/passwd
 listener 1883
-listener 9001
+listener 8080
 protocol websockets
 ```
 6. Restart Docker container: `docker compose restart`
