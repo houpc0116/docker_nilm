@@ -1,8 +1,8 @@
 # Mosquitto on Docker Container
 The `docker-compose.yml` file includes a basic installation of Mosquitto on a Docker container. Clone the repository and follow the given steps below:
 1. Start container: `docker compose up -d`. Three new directories (`config`, `data`, `log`) will be created.
-2. Get into the relevant container: `docker exec -it mqtt sh`.
-3. Generate authentication file: `mosquitto_passwd -c /mosquitto/config/auth username`. Replace the `username` with your own.
+2. Get into the relevant container: `docker exec -it mosquitto sh`.
+3. Generate authentication file: `mosquitto_passwd -b /mosquitto/config/passwd awinlab awinlab`. Replace the `username` with your own.
 4. Enter the password once prompt.
 5. Create a configuration file: `touch config/mosquitto.conf` with the following configurations:
 ```
