@@ -1,0 +1,9 @@
+django==3.2.10
+django-filter
+djangorestframework
+mysqlclient
+mysql-connector-python
+uuid
+websocket
+pymysql
+uwsgi

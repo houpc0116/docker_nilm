@@ -28,6 +28,20 @@ services:
        - ./sql:/var/lib/mysql
     ports:
        - 3306:3306
+  mongo:
+    image: mongo:4.4.17
+    restart: always
+    environment:
+       MONGO_INITDB_ROOT_USERNAME: sinew
+       MONGO_INITDB_ROOT_PASSWORD: sinew3612
+       MONGO_INITDB_DATABASE: nilm
+    volumes:
+       - ./mongo/db:/data/db
+       - ./mongo/mongod.conf:/etc/mongod.conf
+    ports:
+       - 27018:27017
+    network_mode: "host"
+    command: mongod -f /etc/mongod.conf
   web-api-1:
     restart: always
     build:
@@ -35,8 +49,24 @@ services:
        dockerfile: Dockerfile
     ports:
        - 8088:5000
+    network_mode: "host"
     depends_on:
        - db
+       - mongo
+  web-api-2:
+    restart: always
+    build:
+       context: ./django
+       dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+       - 8000:8000
+    network_mode: "host"
+    volumes:
+       - ./django:/api
+    depends_on:
+       - db
+       - mongo
   web-nginx:
     restart: always
     build:
@@ -44,6 +74,7 @@ services:
        dockerfile: Dockerfile
     ports:
        - 80:80
+    network_mode: "host" 
     depends_on:
        - mosquitto
   sub:
@@ -54,7 +85,11 @@ services:
     depends_on:
        - db
        - mosquitto
+       - mongo
 volumes:
   config:
   data:
   log:
+  db:
+  sql:
+  django:

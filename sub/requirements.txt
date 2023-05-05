@@ -4,3 +4,5 @@ mysql-connector
 mysql-connector-python
 websocket
 pymysql
+requests
+pymongo
