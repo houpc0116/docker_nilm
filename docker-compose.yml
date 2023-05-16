@@ -14,7 +14,6 @@ services:
     ports:
       - 1883:1883
       - 8080:8080
-
   db:
     image: mysql/mysql-server:5.7
     restart: always
@@ -41,11 +40,11 @@ services:
     ports:
        - 27018:27017
     network_mode: "host"
-    command: mongod -f /etc/mongod.conf
+    command: mongod --auth -f /etc/mongod.conf
   web-api-1:
     restart: always
     build:
-       context: ./web-api-1
+       context: ./flask
        dockerfile: Dockerfile
     ports:
        - 8088:5000

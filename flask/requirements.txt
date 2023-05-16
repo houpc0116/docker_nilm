@@ -1,0 +1,8 @@
+Flask
+gunicorn
+Flask-Uploads
+Pillow
+pathlib
+Werkzeug
+jsonify
+requests
